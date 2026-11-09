@@ -111,8 +111,8 @@ real port.
 |---|---|---|
 | **Skill discovery + invocation** | The model must be able to load a skill's full content on demand | If there's no native skill tool, the sanctioned fallback is to `read` the relevant `SKILL.md` directly — see Part 5. A harness with neither a skill tool nor file-read cannot work. |
 | **File read / write / edit** | Nearly every skill manipulates files | Essential. No workaround. |
-| **Run shell commands** | TDD, verification, git workflows | Essential. |
-| **Subagent / task dispatch** | `dispatching-parallel-agents`, `subagent-driven-development` | Degradable: if unavailable, those specific skills tell the model to do the work inline or report the missing capability — *never* to invent a `Task` call. Some harnesses gate this behind a config flag (e.g. Codex needs multi-agent enabled). |
+| **Run shell commands** | Verification, git workflows | Essential. |
+| **Subagent / task dispatch** | `executing-plans` final review | Degradable: if unavailable, that skill tells the model to do the work inline or report the missing capability — *never* to invent a `Task` call. Some harnesses gate this behind a config flag (e.g. Codex needs multi-agent enabled). |
 | **Todo / task tracking** | Progress tracking in several skills | Degradable: fall back to a plan file or `TODO.md`. |
 | **Web fetch / search** | A few skills | Degradable. |
 | **Shell or polyglot script execution (Windows)** | Only for the shell-hook shape, only if you want Windows support | See Part 7. In-process-plugin harnesses sidestep this entirely. |
@@ -145,7 +145,7 @@ A port is finished when **all** of these are true:
 
    > Let's make a react todo list
 
-   auto-triggers the `brainstorming` skill *before any code is written*. Capture
+   auto-triggers the `writing-plans` skill *before any code is written*. Capture
    the full transcript — the PR requires it.
 5. Tests cover the integration (Part 5) and pass.
 6. A real user can install it through the harness's own mechanism (not by
@@ -657,7 +657,7 @@ tmux capture-pane -t port-test -p          # reply should show it knows its skil
 tmux send-keys -t port-test 'Let'\''s make a react todo list'; sleep 0.4; tmux send-keys -t port-test Enter
 # poll until the turn finishes — re-capture every few seconds, don't capture once
 sleep 8
-tmux capture-pane -t port-test -p          # PASS = brainstorming triggers BEFORE any code
+tmux capture-pane -t port-test -p          # PASS = writing-plans triggers BEFORE any code
 
 # 5. Save the transcript for the PR, then clean up
 tmux capture-pane -t port-test -p > /tmp/port-smoke/transcript.txt
@@ -724,8 +724,7 @@ Then:
   as mode `600`. A bare `scripts/foo.sh` or `./foo.js` in a skill then fails
   with `Permission denied` on that harness even though the repo's tree records
   `100755`. So every script invocation in `skills/**/*.md` is spelled through
-  its interpreter — `bash scripts/start-server.sh …`, `bash
-  scripts/review-package …`, `node ./render-graphs.js …` — and a script that
+  its interpreter — `bash scripts/review-package …` — and a script that
   runs a sibling script needs the same treatment (#2134). Don't "tidy" the
   prefixes away, and don't reach for a packaging-side `chmod`: the mode loss
   happens on the consumer's side, so only the invocation form survives it.
@@ -785,7 +784,7 @@ dispatcher pattern.
 - Target the **`dev`** branch. One harness per PR.
 - Fill in the PR template's **"New harness support"** section and paste the
   complete acceptance-test transcript (the "Let's make a react todo list"
-  session showing `brainstorming` auto-triggering). A PR without this proof will
+  session showing `writing-plans` auto-triggering). A PR without this proof will
   be closed.
 - Superpowers is a zero-dependency plugin. Don't add a third-party runtime
   dependency. Adding a new harness is the one carve-out the contributor rules

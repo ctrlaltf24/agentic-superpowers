@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Begin one task of an inline plan execution in a single call: extract the
-# task's brief (via subagent-driven-development's task-brief, so both skills
-# share one workspace) and record BASE, the commit the task's review range is
+# task's brief (via task-brief) and record BASE, the commit the task's review range is
 # cut from. One tool call instead of two, because every call in an inline
 # session is a turn that re-reads the whole context.
 #
@@ -18,7 +17,7 @@ fi
 
 plan=$1
 n=$2
-sdd="$(cd "$(dirname "$0")/../../subagent-driven-development/scripts" && pwd)"
+sdd="$(cd "$(dirname "$0")" && pwd)"
 
 # BASE comes from the same repository the brief is written into (sdd-repo
 # also refuses one with no commit yet), not from the bare cwd.

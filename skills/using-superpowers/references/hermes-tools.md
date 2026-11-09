@@ -28,8 +28,8 @@ Hermes Agent has a `skills` toolset with `skill_view` and `skills_list` tools.
 To invoke a superpowers skill, use:
 
 ```
-skill_view("brainstorming")
-skill_view("test-driven-development")
+skill_view("writing-plans")
+skill_view("systematic-debugging")
 ```
 
 If `skill_view` cannot find a superpowers skill (it may not appear in the catalog

@@ -51,7 +51,7 @@ class TestPluginRegistration:
         # register_skill), so reaching these asserts proves every
         # registration passed a pathlib.Path.
         assert "using-superpowers" in mock_ctx._skills
-        assert "brainstorming" in mock_ctx._skills
+        assert "writing-plans" in mock_ctx._skills
         for name, path in mock_ctx._skills.items():
             assert isinstance(path, Path)
             assert path.name == "SKILL.md"
@@ -125,7 +125,7 @@ class TestLayoutResolution:
         skills = tmp_path / "superpowers" / "skills"
         plugdir.mkdir(parents=True, exist_ok=True)
         shutil.copy(Path(_PLUGIN_DIR) / "__init__.py", plugdir / "__init__.py")
-        for skill in ("using-superpowers", "brainstorming"):
+        for skill in ("using-superpowers", "writing-plans"):
             shutil.copytree(src_skills / skill, skills / skill)
         return plugdir
 

@@ -24,24 +24,18 @@ Superpowers is a complete software development methodology for your coding agent
   - [Hermes Agent](#hermes-agent)
   - [Muse](#muse)
 - [The Basic Workflow](#the-basic-workflow)
-- [When Something Goes Wrong](#when-something-goes-wrong)
 - [Community](#community)
 - [What's Inside](#whats-inside)
 - [Philosophy](#philosophy)
 - [Contributing](#contributing)
 - [Updating](#updating)
 - [License](#license)
-- [Visual companion telemetry](#visual-companion-telemetry)
 
 ## How it works
 
-It starts from the moment you fire up your coding agent. As soon as it sees that you're building something, it *doesn't* just jump into trying to write code. Instead, it steps back and asks you what you're really trying to do. 
+Once you have a spec or requirements, your agent puts together an implementation plan that's clear enough for an enthusiastic junior engineer with poor taste, no judgement, no project context, and an aversion to testing to follow. It emphasizes YAGNI (You Aren't Gonna Need It) and DRY. 
 
-Once it's teased a spec out of the conversation, it shows it to you in chunks short enough to actually read and digest. 
-
-After you've signed off on the design, your agent puts together an implementation plan that's clear enough for an enthusiastic junior engineer with poor taste, no judgement, no project context, and an aversion to testing to follow. It emphasizes true red/green TDD, YAGNI (You Aren't Gonna Need It), and DRY. 
-
-Next up, once you say "go", it launches a *subagent-driven-development* process, having agents work through each engineering task, inspecting and reviewing their work, and continuing forward. It's not uncommon for your agent to work autonomously for a couple hours at a time without deviating from the plan you put together.
+Next up, once you say "go", it works through each engineering task in order, verifying as it goes and keeping a progress record. It's not uncommon for your agent to work autonomously for a couple hours at a time without deviating from the plan you put together.
 
 There's a bunch more to it, but that's the core of the system. And because the skills trigger automatically, you don't need to do anything special. Your coding agent just has Superpowers.
 
@@ -303,31 +297,17 @@ Superpowers is available as a native Muse plugin — same repo, same skills, all
   muse plugins update superpowers
   ```
 
-Restart any active Muse sessions after installing so the `SessionStart` hook takes effect — skills are active immediately, hooks require approval on first install. To verify, start a fresh session and send `Let's make a react todo list` — a working install auto-triggers `brainstorming` before any code is written. Version is tracked in `.version-bump.json` so `scripts/bump-version.sh` keeps it in sync.
+Restart any active Muse sessions after installing so the `SessionStart` hook takes effect — skills are active immediately, hooks require approval on first install. To verify, start a fresh session and send `Let's make a react todo list` — a working install auto-triggers `writing-plans` before any code is written. Version is tracked in `.version-bump.json` so `scripts/bump-version.sh` keeps it in sync.
 
 ## The Basic Workflow
 
-1. **brainstorming** - Activates before building anything. Draws out what you actually want, and why, through questions that get you describing it, then plays its understanding back for correction. Small changes get agreed in chat; projects get a written design document a builder could plan from.
+1. **writing-plans** - Activates with a spec or requirements. Breaks work into bite-sized tasks. Every task has exact file paths, signatures, and verification steps.
 
-2. **using-git-worktrees** - Activates after design approval. Creates isolated workspace on new branch, runs project setup, verifies clean test baseline.
+2. **executing-plans** - Activates with a plan. Implements every task in the current session and keeps a progress ledger. Offers one fresh review of the whole branch at the end, only if you want it.
 
-3. **writing-plans** - Activates with approved design. Breaks work into bite-sized tasks (2-5 minutes each). Every task has exact file paths, complete code, verification steps.
-
-4. **subagent-driven-development** or **executing-plans** - Activates with plan. Either dispatches a fresh subagent per task with a review after each (most thorough), or implements every task inline in the current session with one fresh review of the whole branch at the end (cheapest).
-
-5. **test-driven-development** - Activates during implementation. Enforces RED-GREEN-REFACTOR: write failing test, watch it fail, write minimal code, watch it pass, commit. Deletes code written before tests.
-
-6. **requesting-code-review** - Activates between tasks. Reviews against plan, reports issues by severity. Critical issues block progress.
-
-7. **finishing-a-development-branch** - Activates when tasks complete. Verifies tests, presents options (merge/PR/keep/discard), cleans up worktree.
+3. **verification-before-completion** - Activates before any claim of success. Requires running the check and reading the output.
 
 **The agent checks for relevant skills before any task.** Mandatory workflows, not suggestions.
-
-## When Something Goes Wrong
-
-Sometimes a session misbehaves: a skill fires when it shouldn't, stays silent when it should, or the agent ignores its plan, repeats work, or burns more tokens than you'd expect. Ask your coding agent to "figure out what went wrong with superpowers in this session" and it will invoke the **diagnosing-superpowers** skill. To examine an earlier session, name it: "figure out what went wrong with superpowers in session `<id>`".
-
-The skill reads the session transcript, reports what happened with line-level evidence, and, if you want, packages a scrubbed bundle for a bug report.
 
 ## Community
 
@@ -342,31 +322,22 @@ Superpowers is built by [Jesse Vincent](https://blog.fsck.com) and the rest of t
 ### Skills Library
 
 **Testing**
-- **test-driven-development** - RED-GREEN-REFACTOR cycle (includes testing anti-patterns reference)
+- **writing-good-tests** - What makes a test worth having; mocks and helpers
 
 **Debugging**
 - **systematic-debugging** - 4-phase root cause process (includes root-cause-tracing, defense-in-depth, condition-based-waiting techniques)
 - **verification-before-completion** - Ensure it's actually fixed
-- **diagnosing-superpowers** - Work out what went wrong in a session, with evidence; export a scrubbed bundle or file an issue
 
-**Collaboration** 
-- **brainstorming** - Drawing out intent before building
+**Collaboration**
 - **writing-plans** - Detailed implementation plans
-- **executing-plans** - Inline plan execution: one context, one final review
-- **dispatching-parallel-agents** - Concurrent subagent workflows
-- **requesting-code-review** - Pre-review checklist
+- **executing-plans** - Plan execution in one context, with an optional final review
 - **receiving-code-review** - Responding to feedback
-- **using-git-worktrees** - Parallel development branches
-- **finishing-a-development-branch** - Merge/PR decision workflow
-- **subagent-driven-development** - Fast iteration with two-stage review (spec compliance, then code quality)
 
 **Meta**
-- **writing-skills** - Create new skills following best practices (includes testing methodology)
 - **using-superpowers** - Introduction to the skills system
 
 ## Philosophy
 
-- **Test-Driven Development** - Write tests first, always
 - **Systematic over ad-hoc** - Process over guessing
 - **Complexity reduction** - Simplicity as primary goal
 - **Evidence over claims** - Verify before declaring success
@@ -380,12 +351,9 @@ The general contribution process for Superpowers is below. Keep in mind that we 
 1. Fork the repository
 2. Switch to the 'dev' branch
 3. Create a branch for your work
-4. Follow the `writing-skills` skill for creating and testing new and modified skills
-5. Submit a PR, filling in every section of the pull request template, including the summary a human writes in their own words.
+4. Submit a PR, filling in every section of the pull request template, including the summary a human writes in their own words.
 
 Skill-behavior tests use the drill eval harness from [superpowers-evals](https://github.com/prime-radiant-inc/superpowers-evals/), cloned into `evals/` — see `evals/README.md` for setup. Plugin-infrastructure tests live at `tests/` and run via the relevant `run-*.sh` or `npm test`.
-
-See `skills/writing-skills/SKILL.md` for the complete guide.
 
 ## Updating
 
@@ -394,7 +362,3 @@ Superpowers updates are somewhat coding-agent dependent, but are often automatic
 ## License
 
 MIT License - see LICENSE file for details
-
-## Visual companion telemetry
-
-Because skills and plugins don't provide any feedback to creators, we have no idea how many of you are using Superpowers. By default, the Prime Radiant logo on brainstorming's optional visual companion feature is loaded from our website. It includes the version of Superpowers in use. It does not include any details about your project, prompt, or coding agent. We don't see your clicks or anything about what you're building. This helps us have a rough idea of how many folks are using Superpowers and which version of Superpowers they're using. It's 100% optional. To disable this, set the environment variable `SUPERPOWERS_DISABLE_TELEMETRY` to any true value. Superpowers also honors Claude Code's `DISABLE_TELEMETRY` and `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` opt-outs.

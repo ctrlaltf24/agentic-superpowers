@@ -1,7 +1,9 @@
-# Writing Good Tests
+---
+name: writing-good-tests
+description: Use when writing or changing tests, adding mocks, or adding cleanup/helper methods for tests.
+---
 
-**Load this reference when:** writing or changing tests, adding mocks, or
-adding cleanup/helper methods for tests.
+# Writing Good Tests
 
 ## Overview
 
@@ -12,10 +14,6 @@ here:
 1. Every test names the break it catches
 2. Every test exercises the real thing
 ```
-
-Strict TDD produces both naturally: a test written first and watched
-failing against real code has already proven it can fail, and only earns
-a mock when the real dependency proves slow or external.
 
 ## Principle 1: Name the Break
 
@@ -48,7 +46,7 @@ retried 5 times and the 6th attempt never happens."
 contains an exact line proves only that the source is the source. Run
 scripts against controlled inputs and assert outputs, side effects, or
 exit codes. Documents that instruct agents are tested by the consuming
-agent's behavior (superpowers:writing-skills); prose for humans earns no
+agent's behavior; prose for humans earns no
 test at all.
 
 **Your code, not the framework.** Test the contract your code makes at
@@ -149,8 +147,7 @@ BEFORE adding a mock or test helper:
 
 ## Tests Ship With the Implementation
 
-The TDD cycle — failing test, minimal implementation, refactor — is what
-"complete" means. Ship the tests the behavior needs and only those:
+Ship the tests the behavior needs and only those:
 trivial code and human prose earn none, and a test written to satisfy
 process costs maintenance forever.
 

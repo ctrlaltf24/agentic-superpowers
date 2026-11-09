@@ -99,7 +99,7 @@ What your human partner asked you to do, in their words:
 
          Let's make a react todo list
 
-     A working integration auto-triggers the `brainstorming` skill before
+     A working integration auto-triggers the `writing-plans` skill before
      any code is written. Paste the complete transcript below.
 
      These are NOT real integrations and PRs that ship them will be closed:
@@ -107,7 +107,7 @@ What your human partner asked you to do, in their words:
      - Manually copying skill files into the harness
      - Wrapping with `npx skills` or similar at-runtime shims
      - Anything that requires the user to opt in to skills per-session
-     - Anything where brainstorming does not auto-trigger on the test above
+     - Anything where writing-plans does not auto-trigger on the test above
 
      If you are not sure whether your integration loads the bootstrap at
      session start, it does not.
@@ -133,8 +133,8 @@ paste the complete transcript here
 
 ## Rigor
 
-- [ ] If this is a skills change: I used `superpowers:writing-skills` and
-      completed adversarial pressure testing (paste results below)
+- [ ] If this is a skills change: I completed adversarial pressure testing
+      (paste results below)
 - [ ] This change was tested adversarially, not just on the happy path
 - [ ] I did not modify carefully-tuned content (Red Flags table,
       rationalizations, "human partner" language) without extensive evals

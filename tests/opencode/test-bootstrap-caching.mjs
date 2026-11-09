@@ -206,7 +206,7 @@ function assertMappingConstants(mod) {
 }
 
 // #2583: skills reference each other as `superpowers:<name>` (the Claude Code
-// plugin namespace), but OpenCode V1 and V2 register bare ids (`brainstorming`)
+// plugin namespace), but OpenCode V1 and V2 register bare ids (`writing-plans`)
 // and their `skill` tools do an exact lookup, so a namespaced call fails with
 // "Unable to load skill". When the injected bootstrap contains namespaced
 // references, its tool mapping must tell the model to drop the prefix, using
@@ -218,8 +218,8 @@ function assertTeachesBareSkillIds(flavor, text, param) {
   if (!text.includes('drop the `superpowers:` prefix')) {
     failures.push(`expected ${flavor} bootstrap to tell the model to drop the superpowers: prefix (bootstrap references ${refs.join(', ')})`);
   }
-  if (!text.includes(`\`superpowers:brainstorming\` → \`skill\` with \`${param}: "brainstorming"\``)) {
-    failures.push(`expected ${flavor} bootstrap to show superpowers:brainstorming loading as \`skill\` with \`${param}: "brainstorming"\``);
+  if (!text.includes(`\`superpowers:writing-plans\` → \`skill\` with \`${param}: "writing-plans"\``)) {
+    failures.push(`expected ${flavor} bootstrap to show superpowers:writing-plans loading as \`skill\` with \`${param}: "writing-plans"\``);
   }
   return failures;
 }

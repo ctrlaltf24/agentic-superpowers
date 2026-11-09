@@ -79,7 +79,7 @@ export const V1_MAPPING = `**Tool Mapping for OpenCode:**
 When skills request actions, substitute OpenCode equivalents:
 - Create or update todos → \`todowrite\`
 - \`Subagent (general-purpose):\` → \`task\` with \`subagent_type: "general"\`
-- Invoke a skill → OpenCode's native \`skill\` tool. Skill ids are bare names, so drop the \`superpowers:\` prefix skills use when they name each other (\`superpowers:brainstorming\` → \`skill\` with \`name: "brainstorming"\`)
+- Invoke a skill → OpenCode's native \`skill\` tool. Skill ids are bare names, so drop the \`superpowers:\` prefix skills use when they name each other (\`superpowers:writing-plans\` → \`skill\` with \`name: "writing-plans"\`)
 - Read files → \`read\`
 - Create, edit, or delete files → \`apply_patch\`
 - Run shell commands → \`bash\`
@@ -97,7 +97,7 @@ export const V2_MAPPING = `**Tool Mapping for OpenCode:**
 When skills request actions, substitute OpenCode equivalents:
 - Create or update todos → OpenCode v2 has no todo tool; track the plan in a markdown file (or the harness's plan facility) instead
 - \`Subagent (general-purpose):\` → \`subagent\` with \`agent: "general"\` (give it \`description\` and \`prompt\`, optionally \`background\`; pass \`sessionID\` to continue a previous subagent)
-- Invoke a skill → OpenCode's native \`skill\` tool. Skill ids are bare names, so drop the \`superpowers:\` prefix skills use when they name each other (\`superpowers:brainstorming\` → \`skill\` with \`id: "brainstorming"\`)
+- Invoke a skill → OpenCode's native \`skill\` tool. Skill ids are bare names, so drop the \`superpowers:\` prefix skills use when they name each other (\`superpowers:writing-plans\` → \`skill\` with \`id: "writing-plans"\`)
 - Read files → \`read\`
 - Create, edit, or delete files → use \`patch\` with \`patchText\` when available; otherwise use \`write\` to create or overwrite files, \`edit\` for targeted changes, and \`shell\` for deletion
 - Run shell commands → \`shell\` (\`command\`, \`workdir\`, \`timeout\`, \`background\`)
@@ -147,7 +147,7 @@ ${toolMapping}
 
 // --- Task-subagent (child session) detection --------------------------------
 //
-// #2160: the bootstrap drives controller workflows (brainstorming, planning,
+// #2160: the bootstrap drives controller workflows (planning,
 // approval cycles). Injecting it into task subagent sessions makes workers
 // restart design/approval cycles for work the parent already authorised; the
 // <SUBAGENT-STOP> note inside the bootstrap relies on model compliance, which
